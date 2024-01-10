@@ -1,20 +1,20 @@
 import { useStore } from "@/store";
 import { useState } from "react";
 
-export default function TodoForm() {
-  const addTodo = useStore((state) => state.addTodo);
+export default function PlotlyInfoForm() {
+  const addPlotlyInfo = useStore((state) => state.fetchPlotlyInfo);
   const [loading, setLoading] = useState(false);
-  const [newTodo, setNewTodo] = useState("");
+  const [newPlotlyInfo, setNewPlotlyInfo] = useState("");
 
-  const handleCreateTodo = async () => {
-    if (newTodo.length === 0) return alert("Todo input must not be empty");
+  const handleFetchPlotlyInfo = async () => {
+    //if (newTodo.length === 0) return alert("Todo input must not be empty");
     try {
       setLoading(true);
-      const todo = { title: newTodo };
-      await addTodo(todo);
-      setNewTodo("");
+      //const todo = { title: newTodo };
+      await addPlotlyInfo();
+      setNewPlotlyInfo("");
     } catch (error) {
-      console.error("Error creating todo item:", error);
+      console.error("Error getting plotlyinfo:", error);
     } finally {
       setLoading(false);
     }
@@ -24,8 +24,8 @@ export default function TodoForm() {
     <div className="flex items-center space-x-2 mb-4">
       <input
         type="text"
-        value={newTodo}
-        onChange={(e) => setNewTodo(e.target.value)}
+        value={newPlotlyInfo}
+        onChange={(e) => setNewPlotlyInfo(e.target.value)}
         className="border rounded px-2 py-1 flex-1"
       />
       <button
@@ -33,7 +33,7 @@ export default function TodoForm() {
         className={`px-2 py-1 text-white rounded ${
           loading ? "bg-gray-400" : "bg-green-500"
         }`}
-        onClick={handleCreateTodo}
+        onClick={handleFetchPlotlyInfo}
       >
         Add
       </button>

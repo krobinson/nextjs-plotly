@@ -1,39 +1,36 @@
 import { create } from "zustand";
 
-type Todo = {
-  id: number;
-  title: string;
-  completed: boolean;
+type PlotlyInfo = {
+  attribute: string;
+  country: string;
+  details: JSON;
 };
 
-type CreateTodo = {
-  title: string;
-};
 
-type TodoStore = {
-  todos: Todo[];
-  fetchTodos: () => void;
-  addTodo: (todo: CreateTodo) => void;
-  updateTodo: (updatedTodo: Todo) => void;
-  deleteTodo: (id: number) => void;
+type PlotlyInfoStore = {
+  plotlyinfos: PlotlyInfo[];
+  fetchPlotlyInfo: () => void;
+  //addTodo: (todo: CreateTodo) => void;
+  //updateTodo: (updatedTodo: Todo) => void;
+  //deleteTodo: (id: number) => void;
 };
 
 const URL = process.env.NEXT_PUBLIC_VERCEL_URL
   ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api`
   : "http://localhost:3000/api";
 
-export const useStore = create<TodoStore>((set) => ({
-  todos: [],
-  fetchTodos: async () => {
+export const useStore = create<PlotlyInfoStore>((set) => ({
+  plotlyinfos: [],
+  fetchPlotlyInfo: async () => {
     try {
-      const response = await fetch(`${URL}/todos`);
-      const todos = await response.json();
-      set({ todos });
+      const response = await fetch(`${URL}/worldviz`);
+      const plotlyinfos = await response.json();
+      set({ plotlyinfos });
     } catch (error) {
-      console.error("Error fetching todos:", error);
+      console.error("Error fetching plotlyinfos:", error);
     }
   },
-  addTodo: async (todo) => {
+  /**addTodo: async (todo) => {
     try {
       const response = await fetch(`${URL}/todos`, {
         method: "POST",
@@ -78,5 +75,5 @@ export const useStore = create<TodoStore>((set) => ({
     } catch (error) {
       console.error("Error deleting todo:", error);
     }
-  },
+  },**/
 }));
